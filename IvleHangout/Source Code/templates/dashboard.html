@@ -1,0 +1,557 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  	<title>IVLE Hangout</title>
+
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+  	<link rel="stylesheet" type="text/css" href="css/jquery.gritter.css">
+  	<link rel="stylesheet" type="text/css" href="css/emoji.css">
+  	<link rel="stylesheet" type="text/css" href="css/hangoutapp.css">
+
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+
+
+	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.8.2.min.js"><\/script>')</script>
+  	<script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
+
+</head>
+<body><div id="top">
+
+
+	<!-- standard static components-->
+	<div id="hoa-head" class="navbar navbar-inverse g-black">
+  		<div class="navbar-inner g-black">
+  			<div class="container g-black">
+   				<a class="brand logo" href="#"><span>iv<sup>l</sup>e</span>Hangout</a>
+   			</div>
+  		</div>
+	</div>
+
+
+	<div id="hoa-content">
+	</div>
+
+
+	<div id="hoa-footer">
+		<p>Copyright (c) 2012 <span class="logo">iv<sup>l</sup>eHangout</span> Team</p>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+	<!--dynamic components-->
+
+
+
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="login">
+		<div class="span8 offset2">
+			<h1>Welcome to <span class="logo"><span>iv<sup>l</sup>e</span>Hangout!</h1>
+			<button class="btn btn-primary btn-large" {{action "login" target="HangoutApp.actionControls"}}><i class="icon-user icon-white"></i> Login!</button>
+		</div>
+	</script>
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="dashboard">
+		<div id="hoa-dashhead">
+		 	<section id="userDetails"  class="btn btn-info g-black">
+
+				<header><i class="icon-user icon-white"></i> {{HangoutApp.userObjCollection.loggedIn}} <i class="icon-chevron-down icon-white"></i></header>
+
+				<div class="details span3">
+					<ul>
+						<li>
+							<strong>Fullname</strong> 
+							{{HangoutApp.userObjCollection.getLoggedInUserFullname}}
+						</li>
+						<li>
+							<strong>Nickname <small>(doubleclick name to change) </small></strong> 
+							{{#view HangoutApp.usernameField valueBinding="HangoutApp.userObjCollection.tempNickname"}}
+								{{#if view.isActive}}
+									{{view HangoutApp.usernameFieldText valueBinding="view.value"}}
+								{{else}}
+									{{view.value}}
+								{{/if}}
+							{{/view}}
+						</li>
+						<li>
+							<strong>Email</strong> 
+							{{HangoutApp.userObjCollection.getLoggedInUserEmail}}
+						</li>	
+					</ul>
+					
+					<div class="accountActions">
+						<button {{action "logout" target="HangoutApp.actionControls"}}  class="btn btn-danger"><i class="icon-off icon-white"></i> Logout</button> 
+						<button {{action "helpDialog" target="HangoutApp.actionControls"}}  class="btn btn-info"><i class="icon-question-sign icon-white"></i> Help</button> 
+					</div>
+				</div>		
+			</section>
+		</div>	
+
+		<div id="hoa-dashboard">
+
+
+			
+
+
+
+			
+		
+			<aside class="content sidebars" id="channelbar">
+				<section id="channelList">
+					<header class="title">
+						<button {{action "showSearch" target="HangoutApp.actionControls"}} title="Search / Add Chat" class="ttip" data-placement="left"><i class="icon-plus"></i></button> 
+						Chat List 
+					</header>
+					{{#each HangoutApp.channelObjCollection}}
+						{{view HangoutApp.channelItem valueBinding="this"}}
+					{{/each}}
+				</section>
+			<!--end aside content channelbar--></aside>
+			
+
+
+
+
+			<section class="content" id="channelchat">
+				{{view HangoutApp.channelSearch valueBinding="this"}}
+
+
+				{{#each HangoutApp.channelObjCollection}}
+					{{view HangoutApp.channelChat valueBinding="this" isVisibleBinding="isActive" }}
+				{{/each}}
+
+			<!--end section content channelchat--></section>
+
+
+
+				
+			<div class="clearfix"></div>
+		</div>
+	</script>
+
+
+
+
+
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="channelItem">
+	
+		<div class="channel btn btn-block">
+			{{#if isPrivateChat}}
+				<span class="name"><i class="icon-user"></i> {{name}}</span>
+			{{else}}
+				{{#if isPublic}}
+					<span class="name"><i class="icon-plus"></i> {{name}}</span>
+				{{else}}
+					<span class="name"><i class="icon-minus"></i> {{name}}</span>
+				{{/if}}
+			{{/if}}
+			{{#if unreadCount}}
+				<span class="unread badge badge-important">{{unreadCount}}</span>
+			{{/if}}
+			<div class="clearfix"></div>
+
+		</div>
+	</script>
+
+
+
+
+
+
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="channelSearch">
+	
+		<div id="channelsearch">
+			<section id="search">
+				<div class="hero-unit span3">
+					<h1>Search Channels</h1>
+					<p>Explore available <strong>Channels</strong> and join the discussions!</p>
+
+					{{view HangoutApp.searchChannelFieldText placeholder="Enter a channel name" valueBinding="HangoutApp.searchResults.searchChannelTerm"}}
+					
+					<button {{action "findChannel" target="HangoutApp.actionControls"}} class="btn btn-primary"><i class="icon-search icon-white"></i> Search Channel</button>
+				</div>
+
+
+				<div class="hero-unit span3">
+					<h1>Connect Users</h1>
+					<p>Find other <strong>Users</strong> and connect privately / chat with them!</p>
+
+					{{view HangoutApp.searchUserFieldText placeholder="Enter a user name" valueBinding="HangoutApp.searchResults.searchUserTerm"}}
+					
+					<button {{action "findUser" target="HangoutApp.actionControls"}} class="btn btn-primary"><i class="icon-search icon-white"></i> Search User</button>
+				</div>
+
+
+				<div class="hero-unit span3">
+					<h1>Join Channels</h1>
+					<p>Cannot find a channel that you like? Join a <strong>Channel</strong> directly!</p>
+
+					{{view HangoutApp.createChannelFieldText placeholder="Enter a channel name" valueBinding="HangoutApp.searchResults.createChannelTerm"}}
+					
+					<button {{action "createChannel" target="HangoutApp.actionControls"}} class="btn btn-primary"><i class="icon-plus icon-white"></i> Create</button>
+				</div>
+
+
+				<div class="clearfix"></div>
+			</section>
+
+
+
+
+
+
+
+
+
+
+			<section id="searchresults-channel" class="searchresults">
+			
+				<h2>Search results - Channel</h2>
+				<button {{action "showSearch" target="HangoutApp.actionControls"}}  class="btn btn-primary"><i class="icon-search icon-white"></i> Search Again</button> 
+
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Channel</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>{{#each HangoutApp.searchResults}}
+						<tr>
+							<td>{{name}}</td>
+							<td>
+								{{#view HangoutApp.buttonJoin valueBinding="name"}}<i class="icon-plus icon-white"></i> Join{{/view}}
+							</td>
+						</tr>
+					{{/each}}</tbody>
+				</table>
+
+			</section>
+
+
+
+
+
+
+
+			<section id="searchresults-user" class="searchresults">
+			
+				<h2>Search results  - Users</h2>
+				<button {{action "showSearch" target="HangoutApp.actionControls"}}  class="btn btn-primary"><i class="icon-search icon-white"></i> Search Again</button> 
+
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Nickname</th>
+							<th>IVLE</th>
+							<th>Email</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>{{#each HangoutApp.searchResults}}
+						<tr>
+							<td>{{fullname}}</td>
+							<td>{{nickname}}</td>
+							<td>{{ivleid}}</td>
+							<td>{{email}}</td>
+							<td>
+								{{#view HangoutApp.buttonPrivChat valueBinding="ivleid"}}<i class="icon-plus icon-white"></i> Chat{{/view}}
+							</td>
+						</tr>
+					{{/each}}</tbody>
+				</table>
+
+			</section>
+		</div>
+	</script>
+
+
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="userListArea">
+		<aside class="secondbar sidebars">
+			<section id="userlist">
+				<header class="title">
+					Channel Users List
+				</header>
+				<table class="table table-striped">
+					{{#each channelUsers}}
+					<tr>
+						<td><i class="{{idToRoleIcon value=this}}"></i></td>
+						<td>{{idToName value=this}} <small>( {{this}} )</small></td>
+					</tr>
+					{{/each}}
+				</table>
+			</section>
+
+		</aside>
+	</script>
+
+
+	<script type="text/x-handlebars" data-template-name="channelDocumentRepoContents">
+			{{#each this.content}}		
+					<span class="file">{{this.filename}}</span>
+			{{/each}}
+	</script>
+	
+	
+
+	<script type="text/x-handlebars" data-template-name="channelDocumentRepo">
+			<br />
+			{{#each this.documentsRepo.content}}
+					<p>
+					
+						<a {{bindAttr href="url"}}>{{filename}}</a>
+						<span>{{uploaderivleid}}</span>
+						{{#view HangoutApp.buttonDeleteFile valueBinding="this"}}<i class=" icon-remove"></i>{{/view}}
+						
+					</p>
+			{{/each}}
+	</script>
+
+
+
+
+	<script type="text/x-handlebars" data-template-name="channelChat">
+		<div class="hoa-chatgroup">
+
+			{{view HangoutApp.userListArea valueBinding="this"}}
+
+			<div class="hoa-chatarea">
+				<div class="options">
+					<span class="title">{{name}}</span>
+					
+
+					{{#if isPrivateChat}}
+					{{else}}
+						{{#view HangoutApp.buttonDraw valueBinding="this"}}<i class="icon-pencil"></i>{{/view}}
+						{{#view HangoutApp.buttonFiles valueBinding="this"}}<i class="icon-file"></i>{{/view}}
+						{{#view HangoutApp.buttonSettings valueBinding="this"}}<i class="icon-wrench"></i>{{/view}}
+						
+						{{#view HangoutApp.buttonFavourite valueBinding="this"}}
+							{{#if isFavourite}}
+								<i class="icon-star" ></i>
+							{{else}}
+								<i class="icon-star-empty" ></i>
+							{{/if}}
+						{{/view}}
+						<span class="canvasSeparator">|</span>
+					{{/if}}
+							
+					{{#view HangoutApp.buttonArchive valueBinding="this"}}<i class="icon-download"></i>{{/view}}
+					{{#view HangoutApp.buttonClose valueBinding="this"}}<i class="icon-remove"></i>{{/view}}
+					<span class="canvasSeparator">|</span>
+					{{#view HangoutApp.buttonUserList valueBinding="this"}}<i class="icon-tasks"></i>{{/view}}
+
+				</div>
+				<div class="hoa-chathistory"><div class="hoa-chatlist">
+					{{#each this.content}}
+						<div class="chat">
+							<span class="type">{{user}}</span>
+							<span class="message">
+								{{contentParser value=content}}
+							</span>
+							<span class="timestamp">{{timestamp}}</span>
+						</div>
+					{{/each}}
+				</div></div>
+
+				<div class="hoa-drawsomething hoa-chattoggles">
+					<h2>Drawing Canvas</h2>
+					{{#view HangoutApp.settingCanvas valueBinding="this"}}
+						{{#view HangoutApp.buttonCanvasClear valueBinding="this"}}<i class="icon-trash icon-white"></i>{{/view}}
+						{{#view HangoutApp.buttonCanvasUndo valueBinding="this"}}<i class="icon-chevron-left icon-white"></i>{{/view}}
+						<span class="canvasSeparator">|</span>
+						{{#view HangoutApp.buttonCanvasMarker valueBinding="this"}}<i class="icon-pencil icon-white"></i>{{/view}}
+						{{#view HangoutApp.buttonCanvasEraser valueBinding="this"}}<i class="icon-tag icon-white"></i>{{/view}}
+						{{#view HangoutApp.buttonCanvasPaintBucket valueBinding="this"}}<i class="icon-tint icon-white"></i>{{/view}}
+						<span class="canvasSeparator">|</span>
+						{{#view HangoutApp.buttonCanvasPurple valueBinding="this"}}<img src= ".\img\purple.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasYellow valueBinding="this"}}<img src= ".\img\yellow.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasGreen valueBinding="this"}}<img src= ".\img\green.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasBrown valueBinding="this"}}<img src= ".\img\brown.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasRed valueBinding="this"}}<img src= ".\img\red.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasBlue valueBinding="this"}}<img src= ".\img\blue.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasOrange valueBinding="this"}}<img src= ".\img\orange.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasPink valueBinding="this"}}<img src= ".\img\pink.png"></img>{{/view}}
+						<span class="canvasSeparator">|</span>
+						{{#view HangoutApp.buttonCanvasSizeSmall valueBinding="this"}}<img src= ".\img\small.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasSizeMedium valueBinding="this"}}<img src= ".\img\medium.png"></img>{{/view}}
+						{{#view HangoutApp.buttonCanvasSizeLarge valueBinding="this"}}<img src= ".\img\large.png"></img>{{/view}}
+						<span class="canvasSeparator">|</span>
+						{{#view HangoutApp.buttonCanvasSave valueBinding="this"}}<i class="icon-download icon-white"></i>{{/view}}
+						<span class="canvasPointer">{{canvasPointer.content}}</p>
+					{{/view}}
+				</div>
+				
+				<div class="hoa-settings hoa-chattoggles">
+					<h2>Settings</h2>
+					<ul>
+						<li>
+							<strong>Name</strong>
+							{{name}}
+						</li>
+						<li>
+							<strong>Topic <small>(doubleclick name to change) </small></strong> 
+							{{#view HangoutApp.TopicField valueBinding="topic" channelViewBinding="this"}}
+								{{#if view.isActive}}
+									{{view HangoutApp.TopicFieldArea valueBinding="view.value"}}
+								{{else}}
+									{{view.value}}
+								{{/if}}
+							{{/view}}
+							
+						</li>
+					</ul>
+				</div>
+
+				<div class="hoa-files hoa-chattoggles">
+					<h2>Files</h2>
+						<br />
+						<strong>Upload</strong>
+						<br />
+						<form enctype="multipart/form-data" action="javascript:" type="POST">
+											<input type="file" style="display:none" class="fileToUpload"></input>
+											{{#view HangoutApp.buttonChooseFile valueBinding="this"}}Choose File{{/view}}
+											<input class="fileToUploadName" type="text"></input>
+											{{#view HangoutApp.buttonFileUpload valueBinding="this"}}Upload{{/view}}
+						</form>  
+
+						<span id="pendingUpload"><span>
+						<div id="response"></div> 
+						
+						<strong>Files</strong>
+						{{view HangoutApp.documentRepo valueBinding="this.documentRepo"}}
+
+				</div>
+
+			</div>
+
+			<div class="hoa-chatmsg">
+				{{view HangoutApp.chatField placeholder="Enter Your Chat Here" valueBinding="msg"}}
+				<button {{action "sendMsg" target="this"}} class="btn">Send!</button>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</script>	
+
+
+
+
+
+
+
+
+
+<div id="disconnect" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="disconnectModel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Oops...</h3>
+	  </div>
+	  <div class="modal-body">
+	    	<p>Connection to the server cannot be established</p>
+	    	<p>Close this dialog if you want to backup your chats.</p>
+	    	<p>Otherwise you try logging in again by reloading</p>
+	  </div>
+	  <div class="modal-footer">
+	    	<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    	<button class="btn btn-primary reload">Reload</button>
+	  </div>
+</div>
+
+
+
+
+<div id="helpShortcuts" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpShortcutsModel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Help</h3>
+	  </div>	
+	  <div class="modal-body">
+				<h4>Prefix commands with '/' in chat message:</h4>
+				channel,registerchannel,cs3213<br />
+				channel,deregisterchannel,cs3213<br />
+				channel,requestjoin,cs3213<br />
+				channel,requestleave,cs3213<br />
+				channel,requestinvite,cs3213,a0000000<br />
+				channel,requestkick,cs3213,a0000000<br />
+				channel,changetopic,cs3213,Hello world<br />
+				channel,sendchat,cs3213,Hello world<br />
+				channel,setprivacy,cs3213,private<br />
+				channel,setaccess,cs3213,a0000000,2<br />
+				channel,setpermissions,cs3213,{"chat": 3, "upload": 2}<br />
+	  			
+	  			<br />
+	  	
+				user,changenickname,NewNick<br />
+				user,addmute,a0000000<br />
+				user,unmute,a0000000<br />
+				user,addautojoin,cs3213<br />
+				user,deleteautojoin,cs3213<br />
+				user,retrieveautojoin<br />
+				user,sendprivchat,a0000000,hello world<br />
+				user,updatestatus,Away<br />
+	  		
+	  		<div class="clearfix"></div>
+
+	  </div>
+	  <div class="modal-footer">
+	    	<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	  </div>
+</div>
+
+
+
+
+
+
+	<script type="text/javascript" src="js/libs/handlebars-1.0.0.beta.6.js"></script>
+  	<script type="text/javascript" src="js/libs/ember-1.0.pre.min.js"></script>
+  	<script type="text/javascript" src="js/libs/jquery.gritter.min.js"></script>
+  	<script type="text/javascript" src="js/libs/jquery.livequery.js"></script>  		
+  	<script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="js/hangout-server.js"></script>
+	<script type="text/javascript" src="js/components/misc.js"></script>
+	<script type="text/javascript" src="js/drawcanvas.js"></script>
+
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/components/models.js"></script>
+	<script type="text/javascript" src="js/components/views.js"></script>
+	<script type="text/javascript" src="js/components/controllers.js"></script>
+</div></body>
+</html>

@@ -1,0 +1,1 @@
+This is a project for CS3213 (Software Systems Design) project. It is a real-time chatroom web application.

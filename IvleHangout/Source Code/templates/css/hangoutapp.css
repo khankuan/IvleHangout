@@ -1,0 +1,214 @@
+body{}
+
+#hoa-head{margin: 0;}
+#hoa-head .brand{color: #fff;}
+.logo span{background: #f60; padding: 0 0.2em; color: #fff;}
+
+.dhoa-login{text-align: center; margin-top: 10%; padding-bottom: 30%;}
+.customBtn{border:0; background: none;}
+
+
+#hoa-dashboard{position: relative; width: 100%;}
+#hoa-dashboard .content{border: 0px #ccc solid; border-width: 0 0 0 2px; overflow: auto;}
+
+#hoa-dashboard aside.content{width: 20%; float: left; overflow: auto;}
+#hoa-dashboard section.content{width: 78%; float: right; border-left: 0;} /*59*/
+#hoa-dashboard aside#channelbar{width:20%; float: right; overflow: auto;}
+#hoa-dashboard aside#sidebar{display: none;}
+
+#hoa-dashboard .sidebars section,
+#hoa-dashboard aside.content section {border: 0px #ccc solid; border-width: 1px 0;}
+#hoa-dashboard .sidebars section header,
+#hoa-dashboard aside.content section header{padding: 0.5em; background: #eee; font-weight: bold;}
+
+
+#hoa-footer{clear: both; border-top: 1px #ccc solid; padding: 0.3em; text-align: right;}
+
+
+/*
+ **************************************************
+
+				Specifics
+
+ **************************************************
+ */
+
+
+#userDetails strong{display: block; border-bottom: 1px #aaa solid; margin-bottom: 0.5em; z-index: 99;}
+#userDetails strong small{font-weight: normal;}
+
+
+/* 
+	Sidebars
+*/
+#hoa-dashboard aside.content #channelList .channel{position: relative; border: 0px #ccc solid; border-width: 1px 0; padding: 1em; text-align: left;}
+#hoa-dashboard aside.content #channelList .channel:hover{cursor: pointer;}
+#hoa-dashboard aside.content #channelList .channel .name{float: left; padding-right: 1em; font-size: 1.2em; font-weight: bold;}
+#hoa-dashboard aside.content #channelList .channel .unread{float: right; margin-top: 0.3em;}
+
+
+
+
+#hoa-dashboard .sidebars .title{display: block; position: relative;}
+#hoa-dashboard .sidebars .title button{float:right; padding: 0 5px;}
+#hoa-dashboard .sidebars .title button:hover{cursor: pointer;}
+
+#hoa-dashboard .sidebars #userlist small{display: block; color: #555;}
+
+
+/*
+	Main Dash Area	
+*/
+
+#hoa-dashhead{}
+#hoa-dashhead {position: absolute; top: 5px; right: 5px; font-size: 1.3em; z-index:99;}
+#hoa-dashhead header{text-align: right;}
+#hoa-dashhead header span{font-size: 1.2em;}
+
+#hoa-dashhead .details {background: #333; color: #fff; display: none; margin: 1em 0; text-align: left; padding: 1em 0.5em 2em 0.5em;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+}
+#hoa-dashhead .details ul{ list-style-type: none; }
+#hoa-dashhead .details strong{border-bottom: 1px #ccc solid; }
+#hoa-dashhead .details li{padding-bottom: 2em;}
+#hoa-dashhead .details strong small{display: block;}
+#hoa-dashhead .details input{width: 90%;}
+#hoa-dashhead .details .accountActions{text-align: center;}
+
+
+
+/*
+	Dash channel Area
+*/
+
+#channelchat{position: relative;}
+
+.hoa-chatgroup{}
+.hoa-chatgroup .secondbar{position: absolute; top: 0; right: 0; width: 25%; border-left: 1px #ccc solid; overflow: auto; background:#fff;
+z-index: 60;}
+.hoa-chatgroup .secondbar table{ margin-bottom: 0;}
+
+
+.hoa-chatarea{position: relative; padding-bottom: 0em; width: 74%;}
+.hoa-chatarea .title{float: left; font-size: 1.2em; font-weight: bold;}
+.hoa-chatarea .options{ text-align: right; padding: 0.5em 2%; border-bottom: 1px #ccc solid; display: block; font-weight: bold;}
+
+
+/* Option buttons and their slideup */
+.hoa-chathistory, .hoa-chattoggles{position:relative; overflow: auto; width: 90%; padding: 0 5%;}
+.hoa-chattoggles{display: none; position: absolute; bottom: 0em; left: 1em; background: #000; color: #fff; border: 1px #ccc solid; width: 78%; overflow: auto; 
+	opacity: 0.9; }
+.hoa-chattoggles h2{border-bottom: 1px #ccc solid; text-align: center; font-size: 1em; margin:0; padding: 0;}
+
+.hoa-settings ul{list-style-type: none;}
+.hoa-settings ul li{margin-bottom: 2em;}
+.hoa-settings ul strong{display: block; border-bottom: 1px #333 solid;}
+
+.topic_field {width: 99%; min-height: 200px;height: 200px;}
+
+
+/* Canvas elements */
+.settingCanvas {height:30px; width: 620px; padding-top:6px;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.canvasPointer {font-size:0.8em;padding: 0px; margin:0px; float:right; margin-top:8px;}
+.canvasSelected {border-bottom: 1px #ccc solid;}
+.canvasSeparator {
+opacity:0.8; 
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.canvasLayerTop {border: 1px solid white;z-index: 2;position: absolute;cursor: crosshair;}
+.canvasLayerBtm {border: 1px solid white;z-index: 1;position: absolute;cursor: crosshair;}
+
+/* chat specifics */
+.chat {position: relative; clear: both; margin: 1em 0;}
+.chat .type{width: 20%; position: absolute; top: 0; left: 0;}
+.chat .message{margin-left: 25%; display: block; background: #eee; padding: 0.5em;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+}
+.chat:nth-child(even) .message{background: #ddd;}
+.chat .timestamp {clear: both; display: block; text-align: right; font-size: 0.8em;}
+
+.hoa-chatmsg {position: absolute; bottom: 0; left:0; padding: 0.5em 0; width: 100%; border-top: 1px #ccc solid; background: #ddd; z-index: 90;}
+.hoa-chatmsg input{width: 80%; float: left; margin: 0 1em;}
+
+
+.buttonChooseFile {margin-bottom: 9px;}
+.buttonFileUpload {margin-bottom: 9px;}
+
+
+
+/* Dashboard Landing Page */
+#channelsearch{padding: 1em; overflow: auto;}
+#channelsearch #search{position: relative; padding-top: 2em;}
+#channelsearch #search h1{padding-bottom: 1em; font-size: 2em;}
+#channelsearch input{width: 80%;}
+
+#channelsearch .hero-unit{float: left !important;}
+
+#channelsearch .searchresults{display: none;}
+#channelsearch .searchresults table{margin: 2em 0;}
+
+
+
+
+
+
+/*
+ **************************************************
+
+				Modal Dialogs
+
+ **************************************************
+ */
+#helpShortcuts{}
+#helpShortcuts .modal-body {position: relative;}
+#helpShortcuts .modal-body .left-body{float: left; width: 49%;}
+#helpShortcuts .modal-body .right-body{float: right; width: 49%;}
+
+
+
+
+/*
+ **************************************************
+
+				CSS3 Spam
+
+ **************************************************
+ */
+.g-offwhite{
+background: rgb(239,239,239) !important; /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(239,239,239,1) 0%, rgba(247,247,247,1) 50%, rgba(247,247,247,1) 99%) !important; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(239,239,239,1)), color-stop(50%,rgba(247,247,247,1)), color-stop(99%,rgba(247,247,247,1))) !important; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(239,239,239,1) 0%,rgba(247,247,247,1) 50%,rgba(247,247,247,1) 99%) !important; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(239,239,239,1) 0%,rgba(247,247,247,1) 50%,rgba(247,247,247,1) 99%) !important; /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(239,239,239,1) 0%,rgba(247,247,247,1) 50%,rgba(247,247,247,1) 99%) !important; /* IE10+ */
+background: linear-gradient(to bottom,  rgba(239,239,239,1) 0%,rgba(247,247,247,1) 50%,rgba(247,247,247,1) 99%) !important; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#f7f7f7',GradientType=0 ) !important; /* IE6-9 */
+}
+
+
+
+.g-black{
+color: #fff;
+background: rgb(82,88,91) !important; /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(82,88,91,1) 0%, rgba(56,56,56,1) 100%) !important; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(82,88,91,1)), color-stop(100%,rgba(56,56,56,1))) !important; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(82,88,91,1) 0%,rgba(56,56,56,1) 100%) !important; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(82,88,91,1) 0%,rgba(56,56,56,1) 100%) !important; /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(82,88,91,1) 0%,rgba(56,56,56,1) 100%) !important; /* IE10+ */
+background: linear-gradient(to bottom,  rgba(82,88,91,1) 0%,rgba(56,56,56,1) 100%) !important; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52585b', endColorstr='#383838',GradientType=0 ) !important; /* IE6-9 */
+}
+
+
