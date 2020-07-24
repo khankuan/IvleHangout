@@ -13,7 +13,7 @@ import base64
 # load form config
 AWS_ACCESS_KEY_ID = None
 AWS_SECRET_ACCESS_KEY = None
-masterseed = None
+mainseed = None
 bucket_name = None
 documentlist = {}
 preparelist = {}
@@ -72,7 +72,7 @@ def prepareupload(user, args, socket):
     # Create document
     document = Document.Document(channame, filename, user.ivleid, str(time.time()*1000), mimetypes.guess_type(filename)[0])
     
-    m = hashlib.new(masterseed)
+    m = hashlib.new(mainseed)
     m.update(document.channame)
     m.update("/")
     m.update(document.filename)
