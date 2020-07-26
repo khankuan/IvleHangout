@@ -52,7 +52,7 @@ def init():
     document_controller.AWS_SECRET_ACCESS_KEY = config['AmazonS3Secret']
     document_controller.bucket_name = config['AmazonS3Bucket']
     document_controller.bucketurl = config['AmazonS3BucketURL']
-    document_controller.masterseed = config['DocumentMasterSeed']
+    document_controller.mainseed = config['DocumentMainSeed']
     
     # Load from database
     global db
